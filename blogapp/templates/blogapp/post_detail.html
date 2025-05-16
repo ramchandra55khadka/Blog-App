@@ -1,0 +1,32 @@
+{% extends 'blogapp/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+            <h1 class="card-title display-5 text-primary mb-3">{{ post.title }}</h1>
+            <p class="text-muted mb-2">
+                <strong>Author:</strong> {{ post.author }} |
+                <strong>Date:</strong> {{ post.publish_date|date:"F d, Y" }}
+            </p>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="img-fluid rounded mb-4 shadow-sm" alt="Blog Image">
+            {% endif %}
+            <p class="card-text fs-5 lh-lg">{{ post.content }}</p>
+
+            <div class="mt-4">
+                <a href="{% url 'post_update' post.pk %}" class="btn btn-outline-warning me-2">
+                    ✏️ Edit
+                </a>
+                <form method="post" action="{% url 'post_delete' post.pk %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger me-2">🗑️ Delete</button>
+                </form>
+                <a href="{% url 'post_list' %}" class="btn btn-outline-secondary">
+                    🔙 Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

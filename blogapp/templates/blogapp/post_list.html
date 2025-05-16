@@ -1,0 +1,16 @@
+{% extends 'blogapp/base.html' %}
+{% block content %}
+<a href="{% url 'post_create' %}" class="btn btn-primary mb-3">Create New Post</a>
+{% for post in posts %}
+    <div class="card mb-3">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" style="max-height: 300px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+            <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-secondary btn-sm">Read more</a>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
